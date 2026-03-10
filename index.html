@@ -196,9 +196,9 @@
 
         let pinnedLink = '';
 
-        // Pin button in header — scrolls to pinned block
+        // Pin button in header — opens Закрепы chat
         document.getElementById('pin-btn').addEventListener('click', () => {
-            document.getElementById('pinned-block').scrollIntoView({ behavior: 'smooth' });
+            tg.openTelegramLink('https://t.me/+S5Za2TEIiIg5YThi');
         });
 
         fetch('pinned.json?' + Date.now())
