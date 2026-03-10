@@ -23,6 +23,7 @@
         .header {
             text-align: center;
             padding: 12px 0 20px;
+            position: relative;
         }
 
         .header h1 {
@@ -34,6 +35,61 @@
             font-size: 13px;
             color: var(--tg-theme-hint-color, #888);
             margin-top: 4px;
+        }
+
+        .pin-btn {
+            position: absolute;
+            top: 12px;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--tg-theme-secondary-bg-color, #16213e);
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s;
+        }
+
+        .pin-btn:active {
+            transform: scale(0.9);
+        }
+
+        .pinned {
+            background: var(--tg-theme-secondary-bg-color, #16213e);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--tg-theme-button-color, #6c5ce7);
+            display: none;
+        }
+
+        .pinned-label {
+            font-size: 12px;
+            color: var(--tg-theme-hint-color, #888);
+            margin-bottom: 6px;
+        }
+
+        .pinned-text {
+            font-size: 14px;
+            line-height: 1.4;
+            word-break: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .pinned-link {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--tg-theme-link-color, #6c9bd1);
+            text-decoration: none;
+            cursor: pointer;
         }
 
         .portals {
@@ -86,6 +142,13 @@
     <div class="header">
         <h1>DeVibe TelePortal</h1>
         <p>Выбери куда телепортироваться</p>
+        <button class="pin-btn" id="pin-btn">📌</button>
+    </div>
+
+    <div class="pinned" id="pinned-block">
+        <div class="pinned-label">📌 Закреп</div>
+        <div class="pinned-text" id="pinned-text"></div>
+        <a class="pinned-link" id="pinned-link">перейти →</a>
     </div>
 
     <div class="portals">
@@ -130,6 +193,32 @@
                 tg.close();
             });
         });
+
+        let pinnedLink = '';
+
+        // Pin button in header — scrolls to pinned block
+        document.getElementById('pin-btn').addEventListener('click', () => {
+            document.getElementById('pinned-block').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        fetch('pinned.json?' + Date.now())
+            .then(r => r.json())
+            .then(data => {
+                if (data.text) {
+                    document.getElementById('pinned-text').textContent = data.text;
+                    document.getElementById('pinned-block').style.display = 'block';
+                    document.getElementById('pin-btn').style.display = 'flex';
+
+                    if (data.link) {
+                        pinnedLink = data.link;
+                        document.getElementById('pinned-link').addEventListener('click', (e) => {
+                            e.preventDefault();
+                            tg.openTelegramLink(pinnedLink);
+                        });
+                    }
+                }
+            })
+            .catch(() => {});
     </script>
 </body>
 </html>
