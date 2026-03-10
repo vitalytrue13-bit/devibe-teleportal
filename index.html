@@ -222,6 +222,11 @@
 
         loadPinned();
         setInterval(loadPinned, 30000);
+
+        // Refresh when app returns from background
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) loadPinned();
+        });
     </script>
 </body>
 </html>
