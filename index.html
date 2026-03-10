@@ -201,24 +201,27 @@
             tg.openTelegramLink('https://t.me/+S5Za2TEIiIg5YThi');
         });
 
-        fetch('https://raw.githubusercontent.com/vitalytrue13-bit/devibe-teleportal/main/pinned.json?' + Date.now())
-            .then(r => r.json())
-            .then(data => {
-                if (data.text) {
-                    document.getElementById('pinned-text').textContent = data.text;
-                    document.getElementById('pinned-block').style.display = 'block';
-                    document.getElementById('pin-btn').style.display = 'flex';
-
-                    if (data.link) {
-                        pinnedLink = data.link;
-                        document.getElementById('pinned-link').addEventListener('click', (e) => {
-                            e.preventDefault();
-                            tg.openTelegramLink(pinnedLink);
-                        });
+        function loadPinned() {
+            fetch('https://raw.githubusercontent.com/vitalytrue13-bit/devibe-teleportal/main/pinned.json?' + Date.now())
+                .then(r => r.json())
+                .then(data => {
+                    if (data.text) {
+                        document.getElementById('pinned-text').textContent = data.text;
+                        document.getElementById('pinned-block').style.display = 'block';
+                        document.getElementById('pin-btn').style.display = 'flex';
+                        if (data.link) pinnedLink = data.link;
                     }
-                }
-            })
-            .catch(() => {});
+                })
+                .catch(() => {});
+        }
+
+        document.getElementById('pinned-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (pinnedLink) tg.openTelegramLink(pinnedLink);
+        });
+
+        loadPinned();
+        setInterval(loadPinned, 30000);
     </script>
 </body>
 </html>
