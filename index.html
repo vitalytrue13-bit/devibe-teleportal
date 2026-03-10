@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>DeVibe TelePortal</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--tg-theme-bg-color, #1a1a2e);
+            color: var(--tg-theme-text-color, #ffffff);
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 12px 0 20px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 13px;
+            color: var(--tg-theme-hint-color, #888);
+            margin-top: 4px;
+        }
+
+        .portals {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .portal-card {
+            background: var(--tg-theme-secondary-bg-color, #16213e);
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.15s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .portal-card:active {
+            transform: scale(0.96);
+            opacity: 0.8;
+        }
+
+        .portal-icon {
+            font-size: 32px;
+        }
+
+        .portal-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .portal-desc {
+            font-size: 11px;
+            color: var(--tg-theme-hint-color, #888);
+        }
+
+        .portal-card.disabled {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>DeVibe TelePortal</h1>
+        <p>Выбери куда телепортироваться</p>
+    </div>
+
+    <div class="portals">
+        <a class="portal-card" id="pnl-portal" href="#">
+            <span class="portal-icon">📊</span>
+            <span class="portal-name">PnL Bot</span>
+            <span class="portal-desc">Прибыль и убытки</span>
+        </a>
+
+        <div class="portal-card disabled">
+            <span class="portal-icon">📈</span>
+            <span class="portal-name">Trade</span>
+            <span class="portal-desc">Скоро</span>
+        </div>
+
+        <div class="portal-card disabled">
+            <span class="portal-icon">🔍</span>
+            <span class="portal-name">Analytics</span>
+            <span class="portal-desc">Скоро</span>
+        </div>
+
+        <div class="portal-card disabled">
+            <span class="portal-icon">⚙️</span>
+            <span class="portal-name">Settings</span>
+            <span class="portal-desc">Скоро</span>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        const PORTALS = {
+            'pnl-portal': 'https://t.me/DeVibe_LFG_PNL',
+        };
+
+        Object.entries(PORTALS).forEach(([id, url]) => {
+            document.getElementById(id).addEventListener('click', (e) => {
+                e.preventDefault();
+                tg.openTelegramLink(url);
+                tg.close();
+            });
+        });
+    </script>
+</body>
+</html>
