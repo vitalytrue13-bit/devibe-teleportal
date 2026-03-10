@@ -201,7 +201,7 @@
             tg.openTelegramLink('https://t.me/+S5Za2TEIiIg5YThi');
         });
 
-        fetch('pinned.json?' + Date.now())
+        fetch('https://raw.githubusercontent.com/vitalytrue13-bit/devibe-teleportal/main/pinned.json?' + Date.now())
             .then(r => r.json())
             .then(data => {
                 if (data.text) {
