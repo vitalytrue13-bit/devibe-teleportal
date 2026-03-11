@@ -37,10 +37,9 @@
             margin-top: 4px;
         }
 
-        .pin-btn {
+        .pin-btn, .home-btn {
             position: absolute;
             top: 12px;
-            right: 0;
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -48,13 +47,22 @@
             border: none;
             font-size: 18px;
             cursor: pointer;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
             transition: transform 0.15s;
         }
 
-        .pin-btn:active {
+        .pin-btn {
+            right: 0;
+            display: none;
+        }
+
+        .home-btn {
+            left: 0;
+        }
+
+        .pin-btn:active, .home-btn:active {
             transform: scale(0.9);
         }
 
@@ -142,6 +150,7 @@
     <div class="header">
         <h1>DeVibe TelePortal</h1>
         <p>Выбери куда телепортироваться</p>
+        <button class="home-btn" id="home-btn">🏠</button>
         <button class="pin-btn" id="pin-btn">📌</button>
     </div>
 
@@ -196,6 +205,11 @@
         });
 
         let pinnedLink = '';
+
+        // Home button — opens DeVibe OPG LFG group
+        document.getElementById('home-btn').addEventListener('click', () => {
+            tg.openTelegramLink('https://t.me/+P1Q-4-T9jXZlMjZi');
+        });
 
         // Pin button in header — opens Закрепы chat
         document.getElementById('pin-btn').addEventListener('click', () => {
