@@ -202,7 +202,7 @@
         });
 
         function loadPinned() {
-            fetch('https://cdn.jsdelivr.net/gh/vitalytrue13-bit/devibe-teleportal@main/pinned.json?' + Date.now())
+            fetch('https://devibe-teleportal-default-rtdb.europe-west1.firebasedatabase.app/pinned.json')
                 .then(r => r.json())
                 .then(data => {
                     if (data.text) {
