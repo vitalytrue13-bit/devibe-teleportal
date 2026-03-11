@@ -164,11 +164,11 @@
             <span class="portal-desc">Скоро</span>
         </div>
 
-        <div class="portal-card disabled">
+        <a class="portal-card" id="analytics-portal" href="#">
             <span class="portal-icon">🔍</span>
             <span class="portal-name">Analytics</span>
-            <span class="portal-desc">Скоро</span>
-        </div>
+            <span class="portal-desc">Аналитика</span>
+        </a>
 
         <div class="portal-card disabled">
             <span class="portal-icon">⚙️</span>
@@ -184,6 +184,7 @@
 
         const PORTALS = {
             'pnl-portal': 'https://t.me/DeVibe_LFG_PNL',
+            'analytics-portal': 'https://t.me/+q6AXse0bkiI2NjBi',
         };
 
         Object.entries(PORTALS).forEach(([id, url]) => {
